@@ -1,3 +1,8 @@
+variable "name" {
+  description = "リソース名のプレフィックス。各リソース名の先頭に付与されます。"
+  type        = string
+}
+
 variable "vpc_id" {
   description = "EC2 インスタンスおよびセキュリティグループを配置する VPC の ID。"
   type        = string
@@ -14,7 +19,7 @@ variable "vpc_cidr_block" {
 }
 
 variable "instance_type" {
-  description = "EC2 インスタンスタイプ。"
+  description = "EC2 インスタンスタイプ。DDL 用途のため無料利用枠の t3.micro を推奨します。"
   type        = string
   default     = "t3.micro"
 }
@@ -26,7 +31,7 @@ variable "root_volume_size" {
 }
 
 variable "enable_detailed_monitoring" {
-  description = "EC2 の詳細モニタリングを有効にするかどうか。"
+  description = "EC2 の詳細モニタリングを有効にするかどうか。有効にすると追加料金が発生します。"
   type        = bool
   default     = false
 }
@@ -53,4 +58,10 @@ variable "rds_port" {
   description = "RDS への接続ポート番号。PostgreSQL のデフォルトは 5432 です。"
   type        = number
   default     = 5432
+}
+
+variable "tags" {
+  description = "各リソースに付与するタグのマップ。"
+  type        = map(string)
+  default     = {}
 }
