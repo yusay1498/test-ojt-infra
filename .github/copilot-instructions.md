@@ -33,7 +33,7 @@
 
 ## Pull Request 説明文
 - **必ず日本語で記述すること**
-- リポジトリの `pull_request_template.md` のフォーマットに従うこと
+- リポジトリの `.github/pull_request_template.md` のフォーマットに従うこと
 - 以下のセクションを含めること：
   - `## 概要` — 変更の概要
   - `## 変更内容` — 具体的な変更点
