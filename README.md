@@ -1,22 +1,6 @@
 AWS Terraform Module Template
 ================================================================================
 
-このリポジトリはTerraformの研修で使用するディレクトリのベースとして使います。
-
-使用する際は以下コマンドを使用し、デプロイの対象となるモジュールまで移動させてください。
-
-```bash
-git clone https://github.com/yusay1498/aws-terraform-template.git
-
-rm -rf ./aws-terraform-template/.git
-
-rm -rf ./aws-terraform-template/.github
-
-mv ./aws-terraform-template {移動させたいディレクトリパス}
-```
-
-以下に、デプロイ手順なども載っているのでご確認ください。
-
 Introduction
 --------------------------------------------------------------------------------
 
