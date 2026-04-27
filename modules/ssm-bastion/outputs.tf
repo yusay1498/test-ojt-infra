@@ -8,11 +8,6 @@ output "instance_arn" {
   value       = aws_instance.this.arn
 }
 
-output "security_group_id" {
-  description = "EC2 インスタンスにアタッチされたセキュリティグループの ID。RDS のインバウンドルール設定に使用してください。"
-  value       = aws_security_group.this.id
-}
-
 output "iam_role_arn" {
   description = "EC2 インスタンスにアタッチされた IAM ロールの ARN。create_iam_role が false の場合は null。"
   value       = var.create_iam_role ? aws_iam_role.this[0].arn : null
@@ -20,5 +15,5 @@ output "iam_role_arn" {
 
 output "iam_instance_profile_name" {
   description = "EC2 インスタンスにアタッチされた IAM インスタンスプロファイル名。"
-  value       = local.iam_instance_profile_name
+  value       = var.create_iam_role ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile_name
 }

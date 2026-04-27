@@ -1,8 +1,3 @@
-locals {
-  iam_instance_profile_name = var.create_iam_role ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile_name
-  ssm_egress_cidr_blocks    = var.ssm_egress_cidr_blocks != null ? var.ssm_egress_cidr_blocks : [var.vpc_cidr_block]
-}
-
 # ------------------------------------------------------------
 # AMI: Amazon Linux 2023 (最新)
 # ------------------------------------------------------------
@@ -65,47 +60,6 @@ resource "aws_iam_instance_profile" "this" {
 }
 
 # ------------------------------------------------------------
-# Security Group: インバウンドなし・アウトバウンド最小限
-# Session Manager はインバウンド不要
-# アウトバウンド:
-#   - HTTPS (443) → SSM エンドポイント向け
-#     - VPC Interface Endpoint 利用時: vpc_cidr_block（デフォルト）
-#     - NAT Gateway 利用時: ssm_egress_cidr_blocks = ["0.0.0.0/0"] を指定
-#   - PostgreSQL (rds_port) → RDS セキュリティグループ (rds_security_group_id 指定時)
-# ------------------------------------------------------------
-resource "aws_security_group" "this" {
-  name        = "${var.name}-ssm-bastion"
-  description = "Security group for SSM bastion EC2 instance. No inbound rules. Outbound restricted to SSM endpoints and RDS."
-  vpc_id      = var.vpc_id
-
-  egress {
-    description = "Allow HTTPS to SSM endpoints (VPC endpoint or NAT gateway)"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = local.ssm_egress_cidr_blocks
-  }
-
-  dynamic "egress" {
-    for_each = var.rds_security_group_id != null ? [var.rds_security_group_id] : []
-
-    content {
-      description     = "Allow PostgreSQL traffic to RDS security group"
-      from_port       = var.rds_port
-      to_port         = var.rds_port
-      protocol        = "tcp"
-      security_groups = [egress.value]
-    }
-  }
-
-  tags = var.tags
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-# ------------------------------------------------------------
 # EC2: SSM 経由アクセス用踏み台インスタンス
 # - パブリック IP なし・キーペアなし（Session Manager 経由のみ）
 # - IMDSv2 必須
@@ -115,8 +69,8 @@ resource "aws_instance" "this" {
   ami                         = data.aws_ami.amazon_linux_2023.id
   instance_type               = var.instance_type
   subnet_id                   = var.subnet_pri_ids[0]
-  vpc_security_group_ids      = [aws_security_group.this.id]
-  iam_instance_profile        = local.iam_instance_profile_name
+  vpc_security_group_ids      = var.security_group_ids
+  iam_instance_profile        = var.create_iam_role ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile_name
   associate_public_ip_address = false
   monitoring                  = var.enable_detailed_monitoring
   ebs_optimized               = true
