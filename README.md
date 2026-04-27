@@ -125,7 +125,7 @@ No resources.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_subnet_pri_ids"></a> [subnet\_pri\_ids](#input\_subnet\_pri\_ids) | EC2 インスタンスを配置するプライベートサブネットの ID。 | `list(string)` | n/a | yes |
-| <a name="input_vpc_cidr_block"></a> [vpc\_cidr\_block](#input\_vpc\_cidr\_block) | VPC の CIDR ブロック。Session Manager 用 VPC エンドポイントへの HTTPS アウトバウンド許可に使用されます。 | `string` | n/a | yes |
+| <a name="input_vpc_cidr_block"></a> [vpc\_cidr\_block](#input\_vpc\_cidr\_block) | VPC の CIDR ブロック。Session Manager 用 VPC エンドポイントへの HTTPS アウトバウンド許可に使用されます。ssm\_egress\_cidr\_blocks を指定した場合はその値が優先されます。 | `string` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | EC2 インスタンスおよびセキュリティグループを配置する VPC の ID。 | `string` | n/a | yes |
 | <a name="input_create_iam_role"></a> [create\_iam\_role](#input\_create\_iam\_role) | IAM ロールおよびインスタンスプロファイルを新規作成するかどうか。false の場合は iam\_instance\_profile\_name を指定してください。 | `bool` | `true` | no |
 | <a name="input_enable_detailed_monitoring"></a> [enable\_detailed\_monitoring](#input\_enable\_detailed\_monitoring) | EC2 の詳細モニタリングを有効にするかどうか。 | `bool` | `false` | no |
@@ -134,6 +134,7 @@ No resources.
 | <a name="input_rds_port"></a> [rds\_port](#input\_rds\_port) | RDS への接続ポート番号。PostgreSQL のデフォルトは 5432 です。 | `number` | `5432` | no |
 | <a name="input_rds_security_group_id"></a> [rds\_security\_group\_id](#input\_rds\_security\_group\_id) | 接続先 RDS のセキュリティグループ ID。指定した場合、EC2 SG から当該 RDS SG への PostgreSQL アウトバウンドルールが追加されます。 | `string` | `null` | no |
 | <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | ルートブロックデバイスのサイズ（GiB）。 | `number` | `30` | no |
+| <a name="input_ssm_egress_cidr_blocks"></a> [ssm\_egress\_cidr\_blocks](#input\_ssm\_egress\_cidr\_blocks) | SSM 接続用 HTTPS アウトバウンドを許可する CIDR リスト。VPC Interface Endpoint 利用時は null（vpc\_cidr\_block を使用）、NAT Gateway 利用時は ["0.0.0.0/0"] を指定してください。 | `list(string)` | `null` | no |
 
 ## Outputs
 

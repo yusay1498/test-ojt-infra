@@ -1,5 +1,6 @@
 locals {
   iam_instance_profile_name = var.create_iam_role ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile_name
+  ssm_egress_cidr_blocks    = var.ssm_egress_cidr_blocks != null ? var.ssm_egress_cidr_blocks : [var.vpc_cidr_block]
 }
 
 # ------------------------------------------------------------
@@ -67,7 +68,9 @@ resource "aws_iam_instance_profile" "this" {
 # Security Group: インバウンドなし・アウトバウンド最小限
 # Session Manager はインバウンド不要
 # アウトバウンド:
-#   - HTTPS (443) → VPC CIDR (SSM VPC エンドポイント向け)
+#   - HTTPS (443) → SSM エンドポイント向け
+#     - VPC Interface Endpoint 利用時: vpc_cidr_block（デフォルト）
+#     - NAT Gateway 利用時: ssm_egress_cidr_blocks = ["0.0.0.0/0"] を指定
 #   - PostgreSQL (rds_port) → RDS セキュリティグループ (rds_security_group_id 指定時)
 # ------------------------------------------------------------
 resource "aws_security_group" "this" {
@@ -76,11 +79,11 @@ resource "aws_security_group" "this" {
   vpc_id      = var.vpc_id
 
   egress {
-    description = "Allow HTTPS to VPC CIDR for SSM VPC endpoints"
+    description = "Allow HTTPS to SSM endpoints (VPC endpoint or NAT gateway)"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr_block]
+    cidr_blocks = local.ssm_egress_cidr_blocks
   }
 
   dynamic "egress" {
@@ -116,6 +119,7 @@ resource "aws_instance" "this" {
   iam_instance_profile        = local.iam_instance_profile_name
   associate_public_ip_address = false
   monitoring                  = var.enable_detailed_monitoring
+  ebs_optimized               = true
 
   # IMDSv2 を強制（セキュリティベストプラクティス）
   metadata_options {

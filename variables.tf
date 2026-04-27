@@ -9,8 +9,14 @@ variable "subnet_pri_ids" {
 }
 
 variable "vpc_cidr_block" {
-  description = "VPC の CIDR ブロック。Session Manager 用 VPC エンドポイントへの HTTPS アウトバウンド許可に使用されます。"
+  description = "VPC の CIDR ブロック。Session Manager 用 VPC エンドポイントへの HTTPS アウトバウンド許可に使用されます。ssm_egress_cidr_blocks を指定した場合はその値が優先されます。"
   type        = string
+}
+
+variable "ssm_egress_cidr_blocks" {
+  description = "SSM 接続用 HTTPS アウトバウンドを許可する CIDR リスト。VPC Interface Endpoint 利用時は null（vpc_cidr_block を使用）、NAT Gateway 利用時は [\"0.0.0.0/0\"] を指定してください。"
+  type        = list(string)
+  default     = null
 }
 
 variable "instance_type" {
