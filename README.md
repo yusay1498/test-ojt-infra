@@ -124,7 +124,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | EC2 インスタンスを配置するプライベートサブネットの ID。 | `string` | n/a | yes |
+| <a name="input_subnet_pri_ids"></a> [subnet\_pri\_ids](#input\_subnet\_pri\_ids) | EC2 インスタンスを配置するプライベートサブネットの ID。 | `list(string)` | n/a | yes |
 | <a name="input_vpc_cidr_block"></a> [vpc\_cidr\_block](#input\_vpc\_cidr\_block) | VPC の CIDR ブロック。Session Manager 用 VPC エンドポイントへの HTTPS アウトバウンド許可に使用されます。 | `string` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | EC2 インスタンスおよびセキュリティグループを配置する VPC の ID。 | `string` | n/a | yes |
 | <a name="input_create_iam_role"></a> [create\_iam\_role](#input\_create\_iam\_role) | IAM ロールおよびインスタンスプロファイルを新規作成するかどうか。false の場合は iam\_instance\_profile\_name を指定してください。 | `bool` | `true` | no |
@@ -133,7 +133,7 @@ No resources.
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | EC2 インスタンスタイプ。 | `string` | `"t3.micro"` | no |
 | <a name="input_rds_port"></a> [rds\_port](#input\_rds\_port) | RDS への接続ポート番号。PostgreSQL のデフォルトは 5432 です。 | `number` | `5432` | no |
 | <a name="input_rds_security_group_id"></a> [rds\_security\_group\_id](#input\_rds\_security\_group\_id) | 接続先 RDS のセキュリティグループ ID。指定した場合、EC2 SG から当該 RDS SG への PostgreSQL アウトバウンドルールが追加されます。 | `string` | `null` | no |
-| <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | ルートブロックデバイスのサイズ（GiB）。 | `number` | `8` | no |
+| <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | ルートブロックデバイスのサイズ（GiB）。 | `number` | `30` | no |
 
 ## Outputs
 
