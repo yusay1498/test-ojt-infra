@@ -3,9 +3,9 @@
 # 実際の値に置き換えてください
 # ------------------------------------------------------------
 
-vpc_id         = "" # 例: "vpc-xxxxxxxxxxxxxxxxx"
-subnet_id      = "" # 例: "subnet-xxxxxxxxxxxxxxxxx" (プライベートサブネット)
-vpc_cidr_block = "" # 例: "10.0.0.0/16"
+vpc_id         = ""   # 例: "vpc-xxxxxxxxxxxxxxxxx"
+subnet_pri_ids = [""] # 例: ["subnet-xxxxxxxxxxxxxxxxx"] (プライベートサブネット)
+vpc_cidr_block = ""   # 例: "10.0.0.0/16"
 
 # RDS 作成後に設定してください
 # rds_security_group_id = "sg-xxxxxxxxxxxxxxxxx"
