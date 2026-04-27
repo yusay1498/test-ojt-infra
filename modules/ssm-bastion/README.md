@@ -28,7 +28,7 @@ module "ssm_bastion" {
 
   name                  = "myapp-dev"
   vpc_id                = "vpc-xxxxxxxxxxxxxxxxx"
-  subnet_id             = "subnet-xxxxxxxxxxxxxxxxx"
+  subnet_pri_ids        = ["subnet-xxxxxxxxxxxxxxxxx"]
   vpc_cidr_block        = "10.0.0.0/16"
   rds_security_group_id = "sg-xxxxxxxxxxxxxxxxx"
 
