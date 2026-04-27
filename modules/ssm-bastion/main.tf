@@ -41,7 +41,7 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_role" "this" {
   count = var.create_iam_role ? 1 : 0
 
-  name               = "${var.name}-rds-bastion"
+  name               = "${var.name}-ssm-bastion"
   assume_role_policy = data.aws_iam_policy_document.assume_role[0].json
 
   tags = var.tags
@@ -57,7 +57,7 @@ resource "aws_iam_role_policy_attachment" "ssm" {
 resource "aws_iam_instance_profile" "this" {
   count = var.create_iam_role ? 1 : 0
 
-  name = "${var.name}-rds-bastion"
+  name = "${var.name}-ssm-bastion"
   role = aws_iam_role.this[0].name
 
   tags = var.tags
@@ -71,8 +71,8 @@ resource "aws_iam_instance_profile" "this" {
 #   - PostgreSQL (rds_port) → RDS セキュリティグループ (rds_security_group_id 指定時)
 # ------------------------------------------------------------
 resource "aws_security_group" "this" {
-  name        = "${var.name}-rds-bastion"
-  description = "Security group for RDS bastion EC2 instance. No inbound rules. Outbound restricted to SSM endpoints and RDS."
+  name        = "${var.name}-ssm-bastion"
+  description = "Security group for SSM bastion EC2 instance. No inbound rules. Outbound restricted to SSM endpoints and RDS."
   vpc_id      = var.vpc_id
 
   egress {
@@ -103,7 +103,7 @@ resource "aws_security_group" "this" {
 }
 
 # ------------------------------------------------------------
-# EC2: RDS DDL 用踏み台インスタンス
+# EC2: SSM 経由アクセス用踏み台インスタンス
 # - パブリック IP なし・キーペアなし（Session Manager 経由のみ）
 # - IMDSv2 必須
 # - EBS 暗号化有効

@@ -1,5 +1,5 @@
-module "rds_bastion" {
-  source = "./modules/rds-bastion"
+module "ssm_bastion" {
+  source = "./modules/ssm-bastion"
 
   name                       = local.name
   vpc_id                     = var.vpc_id

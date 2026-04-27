@@ -1,10 +1,10 @@
 output "instance_id" {
-  description = "RDS 踏み台 EC2 インスタンスの ID。"
+  description = "SSM 踏み台 EC2 インスタンスの ID。"
   value       = aws_instance.this.id
 }
 
 output "instance_arn" {
-  description = "RDS 踏み台 EC2 インスタンスの ARN。"
+  description = "SSM 踏み台 EC2 インスタンスの ARN。"
   value       = aws_instance.this.arn
 }
 

@@ -114,7 +114,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_rds_bastion"></a> [rds\_bastion](#module\_rds\_bastion) | ./modules/rds-bastion | n/a |
+| <a name="module_ssm_bastion"></a> [ssm\_bastion](#module\_ssm\_bastion) | ./modules/ssm-bastion | n/a |
 
 ## Resources
 
@@ -139,7 +139,7 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_rds_bastion_iam_role_arn"></a> [rds\_bastion\_iam\_role\_arn](#output\_rds\_bastion\_iam\_role\_arn) | RDS 踏み台 EC2 の IAM ロール ARN。create\_iam\_role が false の場合は null。 |
-| <a name="output_rds_bastion_instance_id"></a> [rds\_bastion\_instance\_id](#output\_rds\_bastion\_instance\_id) | RDS 踏み台 EC2 インスタンスの ID。 |
-| <a name="output_rds_bastion_security_group_id"></a> [rds\_bastion\_security\_group\_id](#output\_rds\_bastion\_security\_group\_id) | RDS 踏み台 EC2 のセキュリティグループ ID。RDS のインバウンドルール設定に使用してください。 |
+| <a name="output_ssm_bastion_iam_role_arn"></a> [ssm\_bastion\_iam\_role\_arn](#output\_ssm\_bastion\_iam\_role\_arn) | SSM 踏み台 EC2 の IAM ロール ARN。create\_iam\_role が false の場合は null。 |
+| <a name="output_ssm_bastion_instance_id"></a> [ssm\_bastion\_instance\_id](#output\_ssm\_bastion\_instance\_id) | SSM 踏み台 EC2 インスタンスの ID。 |
+| <a name="output_ssm_bastion_security_group_id"></a> [ssm\_bastion\_security\_group\_id](#output\_ssm\_bastion\_security\_group\_id) | SSM 踏み台 EC2 のセキュリティグループ ID。接続先リソースのインバウンドルール設定に使用してください。 |
 <!-- END_TF_DOCS -->
