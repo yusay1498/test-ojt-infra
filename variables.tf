@@ -3,9 +3,9 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "subnet_id" {
+variable "subnet_pri_ids" {
   description = "EC2 インスタンスを配置するプライベートサブネットの ID。"
-  type        = string
+  type        = list(string)
 }
 
 variable "vpc_cidr_block" {
@@ -22,7 +22,7 @@ variable "instance_type" {
 variable "root_volume_size" {
   description = "ルートブロックデバイスのサイズ（GiB）。"
   type        = number
-  default     = 8
+  default     = 30
 }
 
 variable "enable_detailed_monitoring" {

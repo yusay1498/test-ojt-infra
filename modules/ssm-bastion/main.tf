@@ -111,7 +111,7 @@ resource "aws_security_group" "this" {
 resource "aws_instance" "this" {
   ami                         = data.aws_ami.amazon_linux_2023.id
   instance_type               = var.instance_type
-  subnet_id                   = var.subnet_id
+  subnet_id                   = var.subnet_pri_ids[0]
   vpc_security_group_ids      = [aws_security_group.this.id]
   iam_instance_profile        = local.iam_instance_profile_name
   associate_public_ip_address = false
